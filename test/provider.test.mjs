@@ -26,4 +26,8 @@ test('探头域更正和已接退款独立生效', async t => {
   assert.equal(block.readUInt8(18), 0)
   const lines = await (await fetch(root + '/refunds/lines?ticket=R')).json()
   assert.equal(lines[0].state, 'accepted')
+  assert.equal((await post(root, '/refunds/propose', { ticket: 'R', line: 1, lot: 'L3', grams: 400, key: 'R-1-L3' })).status, 202)
+  const current = await (await fetch(root + '/refunds/lines?ticket=R')).json()
+  assert.equal(current[1].receipt, 'H2')
+  assert.equal(current[1].state, 'accepted')
 })

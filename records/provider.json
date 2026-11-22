@@ -108,7 +108,8 @@
           "ticket": "R",
           "lot": "L3"
         },
-        "status": 202
+        "status": 202,
+        "next": "refund-received"
       },
       {
         "path": "/cold/read",
@@ -169,6 +170,94 @@
         "query": {
           "file": "s"
         }
+      }
+    ],
+    "refund-received": [
+      {
+        "path": "/cold/files",
+        "body": [
+          {
+            "sensor": "A",
+            "zone": "south",
+            "from": 0,
+            "until": 4,
+            "path": "/cold/read?file=a"
+          },
+          {
+            "sensor": "B",
+            "zone": "north",
+            "from": 0,
+            "until": 4,
+            "path": "/cold/read?file=b"
+          },
+          {
+            "sensor": "S",
+            "zone": "south",
+            "path": "/cold/read?file=s",
+            "from": 3,
+            "until": 5
+          }
+        ]
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-a.bin",
+        "query": {
+          "file": "a"
+        }
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-b.bin",
+        "query": {
+          "file": "b"
+        }
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-s.bin",
+        "query": {
+          "file": "s"
+        }
+      },
+      {
+        "path": "/refunds/lines",
+        "body": [
+          {
+            "ticket": "R",
+            "line": 1,
+            "lot": "L1",
+            "grams": 450,
+            "state": "accepted",
+            "receipt": "H1"
+          },
+          {
+            "ticket": "R",
+            "line": 1,
+            "lot": "L3",
+            "grams": 400,
+            "state": "accepted",
+            "receipt": "H2"
+          }
+        ],
+        "query": {
+          "ticket": "R"
+        }
+      },
+      {
+        "path": "/refunds/propose",
+        "body": {
+          "error": "已有相同申请"
+        },
+        "method": "POST",
+        "payload": {
+          "ticket": "R",
+          "lot": "L3"
+        },
+        "status": 409
       }
     ]
   },
