@@ -18,9 +18,9 @@ function post(root, endpoint, value) {
 test('探头域更正和已接退款独立生效', async t => {
   const root = await listen(t)
   const choices = async () => (await (await fetch(root + '/cold/files')).json())
-  assert.equal((await choices())[0].zone, 'N')
+  assert.equal((await choices())[0].zone, 'north')
   await post(root, '/lab?stage=remapped')
-  assert.deepEqual((await choices()).map(row => row.zone), ['S', 'N'])
+  assert.deepEqual((await choices()).map(row => row.zone), ['south', 'north', 'south'])
   const block = Buffer.from(await (await fetch(root + '/cold/read?file=b')).arrayBuffer())
   assert.equal(block.readInt16LE(16), 82)
   assert.equal(block.readUInt8(18), 0)
