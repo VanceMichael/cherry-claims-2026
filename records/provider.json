@@ -6,9 +6,9 @@
         "body": [
           {
             "sensor": "A",
-            "zone": "N",
-            "from": 8,
-            "until": 12,
+            "zone": "north",
+            "from": 0,
+            "until": 4,
             "path": "/cold/read?file=a"
           }
         ]
@@ -27,7 +27,7 @@
           {
             "ticket": "R",
             "line": 1,
-            "lot": "A",
+            "lot": "L1",
             "grams": 450,
             "state": "accepted",
             "receipt": "H1"
@@ -44,17 +44,24 @@
         "body": [
           {
             "sensor": "A",
-            "zone": "S",
-            "from": 8,
-            "until": 12,
+            "zone": "south",
+            "from": 0,
+            "until": 4,
             "path": "/cold/read?file=a"
           },
           {
             "sensor": "B",
-            "zone": "N",
-            "from": 8,
-            "until": 12,
+            "zone": "north",
+            "from": 0,
+            "until": 4,
             "path": "/cold/read?file=b"
+          },
+          {
+            "sensor": "S",
+            "zone": "south",
+            "path": "/cold/read?file=s",
+            "from": 3,
+            "until": 5
           }
         ]
       },
@@ -80,7 +87,7 @@
           {
             "ticket": "R",
             "line": 1,
-            "lot": "A",
+            "lot": "L1",
             "grams": 450,
             "state": "accepted",
             "receipt": "H1"
@@ -99,9 +106,17 @@
         "method": "POST",
         "payload": {
           "ticket": "R",
-          "lot": "B"
+          "lot": "L3"
         },
         "status": 202
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-s.bin",
+        "query": {
+          "file": "s"
+        }
       }
     ],
     "paid": [
@@ -111,7 +126,7 @@
           {
             "ticket": "R",
             "line": 1,
-            "lot": "A",
+            "lot": "L1",
             "grams": 450,
             "state": "paid",
             "receipt": "H1"
@@ -119,6 +134,40 @@
         ],
         "query": {
           "ticket": "R"
+        }
+      },
+      {
+        "path": "/cold/files",
+        "body": [
+          {
+            "sensor": "A",
+            "zone": "south",
+            "from": 0,
+            "until": 4,
+            "path": "/cold/read?file=a"
+          },
+          {
+            "sensor": "B",
+            "zone": "north",
+            "from": 0,
+            "until": 4,
+            "path": "/cold/read?file=b"
+          },
+          {
+            "sensor": "S",
+            "zone": "south",
+            "path": "/cold/read?file=s",
+            "from": 3,
+            "until": 5
+          }
+        ]
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-s.bin",
+        "query": {
+          "file": "s"
         }
       }
     ]
