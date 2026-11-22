@@ -1,0 +1,127 @@
+{
+  "stages": {
+    "first": [
+      {
+        "path": "/cold/files",
+        "body": [
+          {
+            "sensor": "A",
+            "zone": "N",
+            "from": 8,
+            "until": 12,
+            "path": "/cold/read?file=a"
+          }
+        ]
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-a.bin",
+        "query": {
+          "file": "a"
+        }
+      },
+      {
+        "path": "/refunds/lines",
+        "body": [
+          {
+            "ticket": "R",
+            "line": 1,
+            "lot": "A",
+            "grams": 450,
+            "state": "accepted",
+            "receipt": "H1"
+          }
+        ],
+        "query": {
+          "ticket": "R"
+        }
+      }
+    ],
+    "remapped": [
+      {
+        "path": "/cold/files",
+        "body": [
+          {
+            "sensor": "A",
+            "zone": "S",
+            "from": 8,
+            "until": 12,
+            "path": "/cold/read?file=a"
+          },
+          {
+            "sensor": "B",
+            "zone": "N",
+            "from": 8,
+            "until": 12,
+            "path": "/cold/read?file=b"
+          }
+        ]
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-a.bin",
+        "query": {
+          "file": "a"
+        }
+      },
+      {
+        "path": "/cold/read",
+        "body": null,
+        "file": "temp-b.bin",
+        "query": {
+          "file": "b"
+        }
+      },
+      {
+        "path": "/refunds/lines",
+        "body": [
+          {
+            "ticket": "R",
+            "line": 1,
+            "lot": "A",
+            "grams": 450,
+            "state": "accepted",
+            "receipt": "H1"
+          }
+        ],
+        "query": {
+          "ticket": "R"
+        }
+      },
+      {
+        "path": "/refunds/propose",
+        "body": {
+          "receipt": "H2",
+          "state": "accepted"
+        },
+        "method": "POST",
+        "payload": {
+          "ticket": "R",
+          "lot": "B"
+        },
+        "status": 202
+      }
+    ],
+    "paid": [
+      {
+        "path": "/refunds/lines",
+        "body": [
+          {
+            "ticket": "R",
+            "line": 1,
+            "lot": "A",
+            "grams": 450,
+            "state": "paid",
+            "receipt": "H1"
+          }
+        ],
+        "query": {
+          "ticket": "R"
+        }
+      }
+    ]
+  },
+  "common": []
+}
